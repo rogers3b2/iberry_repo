@@ -1,0 +1,155 @@
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/' %} collapsed {% endif %}" href="/dashboard/">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        {%if perms.dashboard.view_room %}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/room/list/' %}collapsed{% endif %}" href="/dashboard/room/list/">
+                <i class="bi bi-houses"></i>
+                <span>Rooms</span>
+            </a>
+        </li>
+        {%endif%} {%if perms.stores%}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path not in 'foods'%}collapsed{% endif %}" data-bs-target="#foods-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-shop"></i><span>Foods</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="foods-nav" class="nav-content {% if 'foods' not in request.path %}collapse{% endif %}" data-bs-parent="#sidebar-nav">
+                {%if perms.stores.view_item%}
+                <li>
+                    <a href="/dashboard/foods/items/" class="{% if '/dashboard/foods/items/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Items</span>
+                    </a>
+                </li>
+                {%endif%} {%if perms.stores.view_category%}
+                <li>
+                    <a href="/dashboard/foods/categories/" class="{% if '/dashboard/foods/categories/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Categories</span>
+                    </a>
+                </li>
+                {%endif%} {%if perms.stores.view_subcategory%}
+                <li>
+                    <a href="/dashboard/foods/categories/sub-categories/" class="{% if '/dashboard/foods/categories/sub-categories/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Sub Categories</span>
+                    </a>
+                </li>
+                {%endif%} {%if perms.stores.view_order%}
+                <li>
+                    <a href="/dashboard/foors/orders/" class="{% if '/dashboard/foors/orders/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Orders</span>
+                    </a>
+                </li>
+                {%endif%}
+            </ul>
+        </li>
+        {%endif%} {%if perms.dashboard.view_service%}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path not in 'services'%}collapsed{% endif %}" data-bs-target="#services-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-card-checklist"></i><span>Services</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="services-nav" class="nav-content {% if 'services' not in request.path %}collapse{% endif %}" data-bs-parent="#sidebar-nav">
+
+                <li>
+                    <a href="/dashboard/services/" class="{% if '/dashboard/services/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Items</span>
+                    </a>
+                </li>
+                {%if perms.stores.view_serviceorder%}
+                <li>
+                    <a href="/dashboard/services/orders/" class="{% if '/dashboard/services/orders/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Orders</span>
+                    </a>
+                </li>
+                {%endif%}
+            </ul>
+        </li>
+        {%endif%} {%if perms.dashboard.view_complain%}
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.path not in 'complaints'%}collapsed{% endif %}" data-bs-target="#complaints-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-flag-fill"></i><span>Complaints</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="complaints-nav" class="nav-content {% if 'complaints' not in request.path %}collapse{% endif %}" data-bs-parent="#sidebar-nav">
+                {%if perms.dashboard.view_complaintype%}
+                <li>
+                    <a href="/dashboard/complaints/types/" class="{% if '/dashboard/complaints/types/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Complaint Types</span>
+                    </a>
+                </li>
+                {%endif%}
+                <li>
+                    <a href="/dashboard/complaints/" class="{% if '/dashboard/complaints/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Complaints Placed</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {%endif%} {%if perms.dashboard.view_complain or perms.stores.view_serviceorder or perms.stores.view_order%}
+
+        <li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/reports/' %}collapsed{% endif %}" href="/dashboard/reports/">
+                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+        {%endif%} {%if perms.dashboard.view_dialer%}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/dialer/' %}collapsed{% endif %}" href="/dashboard/dialer/">
+                <i class="bi bi-cart4"></i>
+                <span>Dialer Option</span>
+            </a>
+        </li>
+        {%endif%} {%if perms.dashboard.view_extension%}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/extension/' and request.path != '/dashboard/extension/add/' %} collapsed {% endif %}" href="/dashboard/extension/">
+                <i class="bi bi-puzzle"></i>
+                <span>Extensions</span>
+            </a>
+        </li>
+        {%endif%} {%if perms.dashboard.view_pbx or perms.dashboard.view_janus or perms.dashboard.view_global%}
+        <li class="nav-item">
+            <a class="nav-link {% if request.path not in 'configuration' %} collapsed {% endif %}" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-gear"></i><span>Configuration</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="icons-nav" class="nav-content {% if 'configuration' not in request.path %}collapse{% endif %}" data-bs-parent="#sidebar-nav">
+                {%if perms.dashboard.view_pbx%}
+                <li>
+                    <a href="/dashboard/configuration/pbx/" class="{% if '/dashboard/configuration/pbx/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>PBX Servers</span>
+                    </a>
+                </li>
+                {%endif%} {%if perms.dashboard.view_janus%}
+                <li>
+                    <a href="/dashboard/configuration/janus/" class="{% if '/dashboard/configuration/janus/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Janus Gateways</span>
+                    </a>
+                </li>
+                {%endif%}{%if perms.dashboard.view_global%}
+                <li>
+                    <a href="/dashboard/configuration/global/" class="{% if '/dashboard/configuration/global/' == request.path %} active {% endif %}">
+                        <i class="bi bi-circle"></i><span>Global Configuration</span>
+                    </a>
+                </li>
+                {%endif%}
+            </ul>
+        </li>
+        {%endif%}
+
+        <!--<li class="nav-item">
+            <a class="nav-link {% if request.path != '/dashboard/permission/groups/' and request.path != '/dashboard/permission/groups/' %} collapsed {% endif %}" href="/dashboard/permission/groups/">
+                <i class="bi bi-shield-lock-fill"></i>
+                <span>Permission Groups</span>
+            </a>
+        </li> -->
+        <!-- End Icons Nav -->
+    </ul>
+
+</aside>
+<!-- End Sidebar-->
